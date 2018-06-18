@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block body %}
+
+<div class="container col-md-8 col-md-offset-2">
+	<div class="text-center  ">
+		<h1>{{ article.title }}</h1>
+	</div>
+
+	<div class="jumbotron">
+		<p>{{ article.content.replace('\r\n','<br>').replace(' ','&nbsp;') | safe}}</p>
+
+	</div>
+
+	<div class="col-md-offset-9">
+		<p>Created by {{ author['username'] }}</p>
+		<p>Created at {{ article.addtime }}</p>
+		<p>Last modify {{ article.last_modify }}</p>
+	</div>
+	<br>
+	<h2>留言</h2>
+	<form method="POST" action="{{ url_for('member.comment') }}">
+	<div class="form-group">
+		<input type="hidden" name="articleid" class="form-control" value="{{ article['id'] }}" >
+		<label for="comment" class="sr-only">Body</label>
+		<textarea class="form-control" name="comment" rows="6" placeholder="Comment"></textarea>
+		<br>
+		<div class="col-lg-offset-11 col-md-offset-11">  
+		<button type="submit" class="btn btn-default btn-primary">Submit</button>
+		</div>
+	</div>
+	</form>
+
+	{% for comment in comments %}
+	<hr>
+	<div class="container">
+		<p>{{ comments_author[loop.index0]['username'] }} :</p>
+		<p>{{ comment.content }}</p>
+		<p>{{ comment.addtime }}</p>
+	</div>
+	{% endfor %}
+
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'member/base.html' %}
+
+{#% block title %}Create Article{% endblock %#}
+{% block body %}
+<div class="container">
+			{% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+	<form method="POST">
+
+		<label for="title" class="sr-only">Title</label>
+		<input type="text" name="title" class="form-control" placeholder="Title" required>
+		<br>
+		<label for="content" class="sr-only">Body</label>
+		<textarea class="form-control" name="content" rows="15" ></textarea>
+		<br>
+		<div class="col-lg-offset-11 col-md-offset-11">  
+		<button type="submit" class="btn btn-default btn-primary">Submit</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

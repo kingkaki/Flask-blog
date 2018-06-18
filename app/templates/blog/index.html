@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Flask Blog {% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  	{% if articles %}
+  	{% for article in articles %}
+    <div class="col-md-4 ">
+      <h2>{{ article['title'] }}</h2>
+      {% if article.content|length > 150 %}
+      <p rows="5">{{ article.content[:150] }}.....</p>
+      {% else %}
+      <p rows="5">{{ article.content }}</p>
+      {% endif %}
+
+      <div class="row">
+        <div class="col-md-2">
+        <p><a class="btn btn-default btn-primary" href="#" role="button">View Article &raquo;</a></p>
+        </div>
+
+        <div class="col-md-1 col-md-offset-7">
+        {% if session['user'].id == article['author_id'] %}
+          <p><a class="btn btn-default btn-primary" href="#" role="button">Edit  &raquo;</a></p>
+        {% endif %}
+        </div>
+      </div>
+
+    </div>
+    {% endfor %}
+    {% endif %}
+
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'member/base.html' %}
+
+{% block body %}
+
+    <div class="container">
+
+      <form class="form-signin" method="POST">
+        <h2 class="form-signin-heading"><p class="text-primary">Login</p></h2>
+        <br>
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+        <br>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <br>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+
+    </div> 
+
+{% endblock %}
