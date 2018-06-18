@@ -1,5 +1,33 @@
-{% extends 'member/base.html' %}
+{% extends 'member/member.html' %}
 
-{% block body %}
-	<h1>Hello world</h1>
+{% block div %}
+	<div class="row">
+	<img src="{{ url_for('static', filename='img/avatars/1.png') }}" class="img-circle center-block" height="200" width="200"  />
+	</div>
+
+	<div class="row">
+		<h1 class="text-center row">{{ user.username }}</h1>
+	</div>
+	<br>
+				
+	<div class="row">
+		<h2 class="text-center row">Signature ： {{ user.signature }}</h2>
+	</div>
+
+	<div class="row">
+		<h2 class="text-center row">Email ： {{ user.email }}</h2>
+	</div>
+
+	<div class="row">
+		<h2 class="text-center row">Real-Name ： {{ user.realname }}</h2>
+	</div>
+
+	<div class="row">
+		<h2 class="text-center row">Phone-number ： {{ user.phone }}</h2>
+	</div>
+	<div class="row">
+		<h2 class="text-center row">Address ： {{ user.address }}</h2>
+	</div>
+
+
 {% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'member/member.html' %}
+
+{% block div %}
+
+	<div class="row">
+		<img src="{{ url_for('static', filename='img/avatars/1.png') }}" class="img-circle center-block" height="200" width="200"  />
+		</div>
+		<br>
+
+		<div class="row">
+			<p class="text-center"><a class="btn btn-lg btn-primary " href="#" role="button">Change Avatar</a></p>
+		</div>
+
+
+		<br>
+		<div class="col-lg-8 col-lg-offset-2">
+		
+		{% for message in get_flashed_messages() %}
+	        <div class="alert alert-danger">{{ message }}</div>
+	    {% endfor %}
+		<form method="POST">
+			<div class="row">
+				<h3 class="">Username : </h3>
+				<input type="text" name="username" class="form-control " value="{{ user.username }}">
+			</div>
+
+			<div class="row">
+				<h3 class="">Signature : </h3>
+				<input type="text" name="signature" class="form-control " value="{% if user.signature != None %}{{ user.signature }}{% else %}{% endif %}">
+			</div>
+			<div class="row">
+				<h3 class="">Email : </h3>
+				<input type="email" name="email" class="form-control " value="{{ user.email }}">
+			</div>
+			<div class="row">
+				<h3 class="">Real-name : </h3>
+				<input type="text" name="realname" class="form-control " value="{% if user.realname != None %}{{ user.realname }}{% else %}{% endif %}">
+			</div>
+			<div class="row">
+				<h3 class="">Phone-number : </h3>
+				<input type="phone" name="phone" class="form-control " value="{% if user.phone != None %}{{ user.phone }}{% else %}{% endif %}">
+			</div>
+			<div class="row">
+				<h3 class="">Address : </h3>
+				<input type="text" name="address" class="form-control " value="{% if user.address != None %}{{ user.address }}{% else %}{% endif %}">
+			</div>
+			<br>
+			<button class="btn btn-lg btn-block btn-primary" type="submit" role="button">Save</button>
+		</form>
+
+	</div>
+
+
+
+{% endblock %}

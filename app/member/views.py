@@ -2,7 +2,7 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:57:04
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-18 16:28:15
+# @Last Modified time: 2018-06-18 20:42:55
 import functools
 from datetime import datetime
 from . import member
@@ -22,11 +22,12 @@ def login_required(view):
 	return wrapped_view
 
 
-
 @member.route('/')
 @login_required
 def index():
-	return render_template('member/index.html')
+	user = Member.query.get(session['user'])
+
+	return render_template('member/index.html', user=user)
 
 
 
@@ -84,7 +85,6 @@ def create():
 
 	if request.method == 'POST':
 		if form.validate():
-			print(456)
 			article = Article(
 				title = form.data['title'],
 				content = form.data['content'],
@@ -102,11 +102,26 @@ def create():
 		return render_template('member/create.html')
 
 
-@member.route('/create', methods=('GET', 'POST'))
+@member.route('/update/<int:id>', methods=('GET', 'POST'))
 @login_required
-def update():
+def update(id):
 	form = UpdateForm(request.form)
-	if request
+	print(request.form)
+	if request.method == 'POST' and form.validate():
+		article = Article.query.filter_by(id=form.data['article_id']).update(
+			dict(
+				title = form.data['title'],
+				content = form.data['content'],
+				last_modify = datetime.now()
+			)
+		)
+		db.session.commit()
+		flash('Update Success')
+		new_article = get_article(id)
+		return render_template('member/update.html', article=new_article)
+	else:
+		article = get_article(id)
+		return render_template('member/update.html', article=article)
 
 
 
@@ -114,7 +129,6 @@ def update():
 @login_required
 def comment():
 	form = CommentForm(request.form)
-	print(request.form)
 	if form.validate():
 		comment = Comment(
 			user_id = session['user'],
@@ -131,4 +145,51 @@ def comment():
 	else:
 		flash('comment error')
 		return redirect(url_for('blog.article'))
+
+@member.route('/modify', methods=('POST','GET'))
+@login_required
+def modify():
+	form = ModifiyForm(request.form)
+
+	if request.method == 'POST':
+		if form.validate():
+			user = Member.query.filter_by(id=session['user']).update(
+				dict(
+					username = form.data['username'],
+					signature = form.data['signature'],
+					email = form.data['email'],
+					realname = form.data['realname'],
+					phone = form.data['phone'],
+					address = form.data['address'],
+				)
+			)
+			db.session.commit()
+
+		else:
+			flash('Incorrect Format.')
+	user = Member.query.get(session['user'])
+
+	return render_template('member/modify.html', user=user)
+
+
+@member.route('/password', methods=('POST','GET'))
+@login_required
+def password():
+	user = Member.query.get(session['user'])
+	form = PasswordForm(request.form)
+	# print(request.form)
+	if request.method== 'POST':
+		if form.validate():
+			if check_password_hash(user.password, form.data['oldpassword']):
+
+				user = Member.query.filter_by(id=session['user']).update(
+					dict( password = generate_password_hash(form.data['newpassword'])))
+				db.session.commit()
+				return redirect(url_for('member.login'))
+			else:
+				flash('Old Password Error.')
+		else:
+			flash('May Passwords not match.')
+
+	return render_template('member/password.html', user=user)
 

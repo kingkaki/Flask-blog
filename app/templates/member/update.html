@@ -1,0 +1,25 @@
+{% extends 'member/base.html' %}
+
+{% block body %}
+<div class="container">
+	{% for message in get_flashed_messages() %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+	<form method="POST">
+		<label for="title" class="sr-only">Title</label>
+		<input type="text" name="title" class="form-control" value="{{ article.title }}" required>
+		<br>
+		<label for="content" class="sr-only">Body</label>
+		<textarea class="form-control" name="content" rows="15" >{{ article.content }}</textarea>
+		<input type="hidden" name="article_id" value="{{ article.id }}">
+		<br>
+		<button type="submit" class="btn btn-default btn-primary">Submit</button>
+	</form>
+	<hr>
+	
+	<form action="#" method="POST">
+		<button type="submit" class="btn btn-default btn-danger" onclick="return confirm('Are you sure?');">Delete</button>	
+	</form>
+
+</div>
+{% endblock %}
