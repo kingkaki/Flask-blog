@@ -1,0 +1,39 @@
+{% extends 'member/member.html' %}
+
+{% block div %}
+
+	<div class="row">
+	<img src="{{ user.avatar }}" class="img-circle center-block" height="200" width="200"  />
+	</div>
+	<div class="text-center">
+      <h2 class="User Log">Section title</h2>
+    </div>
+    <br>
+	  <div class="table-responsive">
+	    <table class="table table-striped">
+	      <thead>
+	        <tr>
+	          <th>Login Id</th>
+	          <th>Login Ip</th>
+	          <th>Login Time</th>
+	        </tr>
+	      </thead>
+	      {% for userlog in userlogs %}
+	      <tbody>
+	        <tr>
+	          <td>{{ loop.index }}</td>
+	          <td>{{ userlog.ip }}</td>
+	          <td>{{ userlog.addtime }}</td>
+	        </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+	{% for userlog in userlogs %}
+
+
+	{% endfor %}
+
+{% endblock %}

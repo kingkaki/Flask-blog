@@ -3,13 +3,21 @@
 {% block div %}
 
 	<div class="row">
-		<img src="{{ url_for('static', filename='img/avatars/1.png') }}" class="img-circle center-block" height="200" width="200"  />
+		<img src="{{ user.avatar }}" class="img-circle center-block" height="200" width="200"  />
 		</div>
 		<br>
 
-		<div class="row">
-			<p class="text-center"><a class="btn btn-lg btn-primary " href="#" role="button">Change Avatar</a></p>
+
+		<div class="row text-center">
+			<form action="{{ url_for('member.avatar') }}" method="POST"  enctype="multipart/form-data" >
+			<label for="avatar">				
+				<input type="file" name="avatar" id="avatar" class="file" >
+				<button class="btn btn-lg btn-block btn-primary" type="submit" role="button">Change Avatar</button>
+			</label>
+			</form>
 		</div>
+		
+
 
 
 		<br>
@@ -53,3 +61,4 @@
 
 
 {% endblock %}
+

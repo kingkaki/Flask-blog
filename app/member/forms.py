@@ -2,9 +2,10 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:56:55
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-18 20:40:11
+# @Last Modified time: 2018-06-19 13:04:55
 from wtforms import Form, BooleanField, TextField, PasswordField, IntegerField,validators
 from wtforms.validators import DataRequired, ValidationError
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from app.models import Member, Article
 from flask import session, abort
 
@@ -67,6 +68,7 @@ class UpdateForm(Form):
 		article = Article.query.get(field.data)
 		if article.user_id != session['user']:
 			abort(403)
+			
 class PasswordForm(Form):
 	oldpassword = PasswordField('oldpassword')
 	newpassword = PasswordField('newpassword', [
@@ -83,3 +85,7 @@ class ModifiyForm(Form):
 	realname = TextField('realname')
 	phone = IntegerField('phone', [validators.NumberRange(10000000000,19999999999)])
 	address = TextField('realname')
+
+
+class AvatarForm(Form):
+	avatar = FileField("avatar",validators = [FileAllowed(['jpg','png'],'Images Only!'), FileRequired()])

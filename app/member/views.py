@@ -2,15 +2,17 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:57:04
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-18 21:47:56
+# @Last Modified time: 2018-06-19 14:24:23
 import functools
+import os
 from datetime import datetime
 from . import member
 from flask import render_template, redirect, url_for, session, flash, request
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.utils import secure_filename
 from app.member.forms import *
-from app.models import Member, Article, Comment
-from app import db
+from app.models import Member, Article, Comment, Userlog
+from app import db, app
 
 
 def login_required(view):
@@ -39,7 +41,8 @@ def register():
 			user = Member(
 				username = form.username.data,
 				email = form.email.data,
-				password = generate_password_hash(form.password.data)
+				password = generate_password_hash(form.password.data),
+				avatar = url_for('static', filename='img/avatars/default.jpg')
 			)
 			db.session.add(user)
 			db.session.commit()
@@ -62,6 +65,12 @@ def login():
 				flash("password error.")
 				return render_template('member/login.html')
 			session['user'] = user.id
+			userlog = Userlog(
+				user_id = user.id,
+				ip = request.remote_addr
+			)
+			db.session.add(userlog)
+			db.session.commit()
 			return redirect(request.args.get('next') or url_for('member.index'))
 		else:
 			flash('username does not exist.')
@@ -72,7 +81,7 @@ def login():
 
 @member.route('/logout')
 @login_required
-def lougout():
+def logout():
 	session.clear()
 	return redirect(url_for('member.index'))
 
@@ -195,4 +204,38 @@ def password():
 def articles():
 	articles = Article.query.filter_by(user_id = session['user']).all()
 	return render_template('member/articles.html', articles=articles)
+
+
+@member.route('/avatar', methods=('POST',))
+@login_required
+def avatar():
+	form = AvatarForm(request.files)
+	if form.validate():
+		import hashlib
+		avatar = form.avatar.data
+		filename = secure_filename(avatar.filename)
+
+		ext = os.path.splitext(filename)[1]  #取后缀		
+		filename = hashlib.md5(avatar.read()).hexdigest()+ext  #文件哈希
+		avatar.seek(0)  #指针重回起点
+
+		file_path = os.path.join(app.config['UPLOAD_FOLDER'],'avatars', filename)
+		avatar.save(file_path)
+
+
+		user = Member.query.filter_by(id=session['user']).update(
+			dict(avatar = '/static/img/avatars/'+filename))
+		db.session.commit()		
+
+	return redirect(url_for('member.modify'))
+
+
+@member.route('/userlog')
+@login_required
+def userlog():
+	userlogs = Userlog.query.filter_by(user_id=session['user']).all()
+	user = Member.query.get(session['user'])
+	return render_template('member/userlog.html', userlogs=userlogs, user=user)
+
+
 
