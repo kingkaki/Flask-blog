@@ -2,15 +2,14 @@
 
 {% block body %}
 
-
-
 	<div class="container-fluid">
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 				<li><a class="btn btn-link" href="{{ url_for('member.index') }}">个人资料</a></li>
 				<li><a class="btn btn-link" href="{{ url_for('member.modify') }}">修改资料</a></li>
 				<li><a class="btn btn-link" href="{{ url_for('member.password') }}">更改密码</a></li>
-				<li><a class="btn btn-link">个人文章</a></li>
+				<li><a class="btn btn-link" href="{{ url_for('member.articles') }}">个人文章</a></li>
+				<li><a class="btn btn-link" href="{{ url_for('member.create') }}">写新文章</a></li>
 				
 			</ul>
 		</div>

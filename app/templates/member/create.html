@@ -1,9 +1,15 @@
-{% extends 'member/base.html' %}
+{% extends 'member/member.html' %}
 
-{#% block title %}Create Article{% endblock %#}
-{% block body %}
+{% block title %}Flask Blog {% endblock %}
+
+{% block div %}
+
 <div class="container">
-			{% for message in get_flashed_messages() %}
+	<div class="row">
+	<h2 class="text-center row">Create New Blog</h2>
+	<br>
+	</div>
+		{% for message in get_flashed_messages() %}
         <div class="alert alert-danger">{{ message }}</div>
         {% endfor %}
 	<form method="POST">

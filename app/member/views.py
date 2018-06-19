@@ -2,7 +2,7 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:57:04
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-18 20:42:55
+# @Last Modified time: 2018-06-18 21:47:56
 import functools
 from datetime import datetime
 from . import member
@@ -93,7 +93,6 @@ def create():
 			)
 			db.session.add(article)
 			a = db.session.commit()
-			flash("Create Success.")
 			return redirect(url_for('member.index'))
 		
 		flash("Create Error.")
@@ -106,7 +105,7 @@ def create():
 @login_required
 def update(id):
 	form = UpdateForm(request.form)
-	print(request.form)
+	# print(request.form)
 	if request.method == 'POST' and form.validate():
 		article = Article.query.filter_by(id=form.data['article_id']).update(
 			dict(
@@ -116,7 +115,6 @@ def update(id):
 			)
 		)
 		db.session.commit()
-		flash('Update Success')
 		new_article = get_article(id)
 		return render_template('member/update.html', article=new_article)
 	else:
@@ -137,8 +135,6 @@ def comment():
 		)
 		db.session.add(comment)
 		db.session.commit()
-		flash('Comment Success')
-
 		return redirect('article/'+str(form.data['articleid']))
 
 
@@ -192,4 +188,11 @@ def password():
 			flash('May Passwords not match.')
 
 	return render_template('member/password.html', user=user)
+
+
+@member.route('/articles')
+@login_required
+def articles():
+	articles = Article.query.filter_by(user_id = session['user']).all()
+	return render_template('member/articles.html', articles=articles)
 

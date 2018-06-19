@@ -1,10 +1,10 @@
-{% extends 'blog/base.html' %}
+{% extends 'member/member.html' %}
 
 {% block title %}Flask Blog {% endblock %}
 
-{% block body %}
+{% block div %}
 
-<div class="container">
+
 
   	{% if articles %}
   	{% for article in articles %}
@@ -22,7 +22,7 @@
         </div>
 
         <div class="col-md-1 col-md-offset-7">
-        {% if session.get('user') == article['user_id'] %}
+        {% if session.get('user').id == article['author_id'] %}
           <p><a class="btn btn-default btn-primary" href="{{ url_for('member.update', id=article.id) }}" role="button">Edit  &raquo;</a></p>
         {% endif %}
         </div>
@@ -32,7 +32,6 @@
     {% endfor %}
     {% endif %}
 
-  </div>
 
 
 {% endblock %}
