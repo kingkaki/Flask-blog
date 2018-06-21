@@ -12,8 +12,9 @@
 
 	</div>
 
-	<div class="col-md-offset-9">
+	<div class="col-md-offset-9">		
 		<p>Created by {{ author['username'] }}</p>
+		<p>Cilck num : {{ article['click_num'] | default(0) }}</p>
 		<p>Created at {{ article.addtime }}</p>
 		<p>Last modify {{ article.last_modify }}</p>
 	</div>
