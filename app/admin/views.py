@@ -2,7 +2,7 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:56:25
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-21 15:18:38
+# @Last Modified time: 2018-06-21 16:05:04
 
 import functools
 from . import admin
@@ -95,7 +95,7 @@ def article():
 	return render_template('admin/article.html', articles=articles)
 
 
-@admin.route('/delete/<int:id>', methods=('POST','GET'))
+@admin.route('/delete/<int:id>', methods=('POST',))
 @admin_required
 def delete(id):
 	article = Article.query.get(id)
