@@ -1,0 +1,31 @@
+{% extends 'admin/admin.html' %}
+
+{% block div %}
+
+	<div class="row">
+		<h1 class="text-center row">{{ admin.username }}</h1>
+	</div>
+	<br>
+				
+	<div class="row">
+		<h2 class="text-center row">Identity ： {% if admin.is_super %}超级管理员{% else %}普通管理员{% endif %}</h2>
+	</div>
+
+	<div class="row">
+		<h2 class="text-center row">Email ： {{ admin.email }}</h2>
+	</div>
+
+
+	<div class="row">
+		<h2 class="text-center row">Real-Name ： {{ admin.realname }}</h2>
+	</div>
+
+	<div class="row">
+		<h2 class="text-center row">Phone-number ： {{ admin.phone }}</h2>
+	</div>
+	<div class="row">
+		<h2 class="text-center row">Address ： {{ admin.address }}</h2>
+	</div>
+
+
+{% endblock %}

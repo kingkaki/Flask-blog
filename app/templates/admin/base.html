@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<script src="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>	
+</head>
+
+<!-- <nav class="navbar navbar-collapse ">
+	<ul class="nav nav-pills navbar-right">
+
+	</ul>	
+</nav> -->
+
+<body>
+	{% block body %}{% endblock %}
+
+</body>

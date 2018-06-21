@@ -1,0 +1,39 @@
+{% extends 'admin/admin.html' %}
+
+{% block div %}
+
+
+	<div class="text-center">
+      <h2 class="User Log">Users</h2>
+    </div>
+    <br>
+	  <div class="table-responsive">
+	    <table class="table table-striped">
+	      <thead>
+	        <tr>
+	          <th>User id</th>
+	          <th>User name</th>
+	          <th>Uesr identity</th>
+	          <th>Register time</th>
+	        </tr>
+	      </thead>
+	      {% for user in users %}
+	      <tbody>
+	        <tr>
+	          <td>{{ loop.index }}</td>
+	          <td>{{ user.username }}</td>
+	          <td>{% if user.is_super==1 %}超级管理员{% elif user.is_super==0 %}普通管理员{% else %}用户{% endif %}</td>
+	          <td>{{ user.addtime }}</td>
+	          <td>
+
+	          </td>
+
+	        </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

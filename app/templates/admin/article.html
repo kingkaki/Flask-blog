@@ -1,0 +1,43 @@
+{% extends 'admin/admin.html' %}
+
+{% block div %}
+
+
+	<div class="text-center">
+      <h2 class="User Log">Articles</h2>
+    </div>
+    <br>
+	  <div class="table-responsive">
+	    <table class="table table-striped">
+	      <thead>
+	        <tr>
+	          <th>Article id</th>
+	          <th>Article name</th>
+	          <th>Article author</th>
+	          <th>Click num</th>
+	       	  <th>Comment num</th>
+	        </tr>
+	      </thead>
+	      {% for article in articles %}
+	      <tbody>
+	        <tr>
+	          <td>{{ loop.index }}</td>
+	          <td><a href="{{ url_for('blog.article', id=article.id) }}">{{ article.title }}</a></td>
+	          <td>{{ article.author }}</td>
+	          <td>{{ article.click_num }}</td>
+	          <td>{{ article.commenttime }}</td>
+	          <td>
+	          	<form action="{{ url_for('admin.delete', id=article.id, next=request.url) }}" method="POST">
+	          	<button type="submit" class="btn btn-default btn-danger" onclick="return confirm('Are you sure?');">Delete</button>
+	          	</form>
+	          </td>
+
+	        </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+
+
+{% endblock %}

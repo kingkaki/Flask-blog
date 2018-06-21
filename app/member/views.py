@@ -2,7 +2,7 @@
 # @Author: King kaki
 # @Date:   2018-06-15 09:57:04
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-19 14:24:23
+# @Last Modified time: 2018-06-21 14:05:14
 import functools
 import os
 from datetime import datetime
@@ -145,8 +145,6 @@ def comment():
 		db.session.add(comment)
 		db.session.commit()
 		return redirect('article/'+str(form.data['articleid']))
-
-
 	else:
 		flash('comment error')
 		return redirect(url_for('blog.article'))

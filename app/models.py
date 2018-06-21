@@ -2,7 +2,7 @@
 # @Author: King kaki
 # @Date:   2018-06-15 10:19:36
 # @Last Modified by:   King kaki
-# @Last Modified time: 2018-06-18 11:55:14
+# @Last Modified time: 2018-06-21 12:10:43
 
 from datetime import datetime
 
@@ -92,6 +92,10 @@ class Admin(db.Model):
 
 	def __repr__(self):
 		return "<Admin %r>" % (self.username) 
+
+	def check_pwd(self, password):
+		from werkzeug.security import check_password_hash
+		return check_password_hash(self.password, password)
 
 
 class Adminlog(db.Model):
